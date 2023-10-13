@@ -42,6 +42,20 @@ app.get('/shipping/:cep', (req, res, next) => {
     );
 });
 
+app.get('/product/:id', (req, res, next) => {
+    inventory.SearchProductById({ id: req.params.id}, (err, data) => {
+        if (err) {
+             // Caso dê erro vai mostrar no console o erro que ocorreu e retorna um erro 500
+            console.error(err);
+           res.status(500).send({ error: 'something failed :(' });
+        } else {
+            // Caso não dê erro retorna o produto encontrado em forma de Json
+            res.json(data.product);
+         }
+    }
+    );
+});
+
 /**
  * Inicia o router
  */
